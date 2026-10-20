@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>피팅 미 소프틀리 — 옷 대보기부터 비교까지</title>
+<meta name="description" content="매장에서 바로 결정하기 어려운 옷, 내 사진에 대어 보고 기록하고 비교해 보세요. Hold store clothes up to your own photo, keep the price tag, compare up to 4.">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<meta property="og:type" content="website">
+<meta property="og:title" content="피팅 미 소프틀리 — FITTING ME SOFTLY">
+<meta property="og:description" content="매장에서 바로 결정하기 어려운 옷, 내 사진에 대어 보고 기록하고 비교해 보세요.">
+<meta property="og:image" content="https://bgiseok.github.io/fittingmesoftly/assets/og.png">
+<meta property="og:url" content="https://bgiseok.github.io/fittingmesoftly/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<script>
+  // 언어: ?lang=ko|en → 저장한 값 → 브라우저 언어. 첫 화면이 그려지기 전에 정한다
+  (function () {
+    var q = new URLSearchParams(location.search).get('lang'), saved = null;
+    try { saved = localStorage.getItem('fms-lang'); } catch (e) {}
+    var lang = q === 'ko' || q === 'en' ? q : saved || ((navigator.language || 'ko').toLowerCase().indexOf('ko') === 0 ? 'ko' : 'en');
+    document.documentElement.lang = lang;
+  })();
+</script>
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #000000;
+    --body: #333333;
+    --muted: #6b6b6b;
+    --line: #e6e6e6;
+    --wash: #f4f4f4;
+    --gutter: clamp(16px, 5vw, 56px);
+    --max: 1160px;
+    --serif: "Bodoni Moda", "Didot", "Bodoni 72", serif;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--paper); color-scheme: light; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Pretendard Variable", Pretendard, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+    font-size: 16px; line-height: 1.7; letter-spacing: -.005em; word-break: keep-all; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  html[lang="ko"] [data-l="en"], html[lang="en"] [data-l="ko"] { display: none !important; }
+  a { color: inherit; }
+  img { display: block; max-width: 100%; height: auto; }
+  .wrap { width: min(var(--max), 100% - 2 * var(--gutter)); margin-inline: auto; }
+  .label { font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  .serif { font-family: var(--serif); font-weight: 400; letter-spacing: -.02em; }
+
+  /* 머리 */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  header .wrap { height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand { font-family: var(--serif); font-size: 19px; letter-spacing: -.01em; text-decoration: none; white-space: nowrap; }
+  .lang { display: flex; border: 1px solid var(--ink); }
+  .lang button { appearance: none; border: 0; background: transparent; font: inherit; font-size: 12px; letter-spacing: .08em; padding: 0 12px; min-height: 36px; cursor: pointer; color: var(--ink); }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+  /* 첫 화면 */
+  .hero { padding: clamp(40px, 8vw, 96px) 0 clamp(48px, 8vw, 104px); }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .wordmark { font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 6.6vw, 92px); line-height: .92; letter-spacing: -.03em; margin: 0; white-space: nowrap; }
+  @media (max-width: 900px) { .wordmark { font-size: clamp(44px, 12vw, 96px); } }
+  .hero .kicker { margin: 28px 0 0; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.45; font-weight: 500; letter-spacing: -.02em; }
+  .hero .lede { margin: 14px 0 0; color: var(--body); max-width: 34em; }
+  .status { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+  .badge { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 22px; background: var(--ink); color: var(--paper); font-size: 14px; letter-spacing: .02em; text-decoration: none; }
+  .badge svg { flex: none; }
+  .status small { color: var(--muted); font-size: 13px; }
+  .pair { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .pair figure { margin: 0; position: relative; background: var(--wash); }
+  .pair img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .pair figcaption { position: absolute; left: 10px; bottom: 10px; background: var(--paper); font-size: 12px; padding: 3px 8px; }
+  .arrow { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 44px; height: 44px; background: var(--paper); display: grid; place-items: center; z-index: 1; }
+
+  /* 공감 띠 */
+  .band { background: var(--ink); color: var(--paper); padding: clamp(48px, 7vw, 88px) 0; }
+  .band .wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 40px; }
+  .band p { margin: 0; font-size: clamp(18px, 2vw, 22px); line-height: 1.5; letter-spacing: -.02em; }
+  .band p span { display: block; margin-top: 8px; font-size: 14px; color: #bdbdbd; letter-spacing: 0; }
+
+  /* 쓰는 법 */
+  section.steps { padding: clamp(64px, 9vw, 120px) 0; }
+  .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: clamp(28px, 4vw, 48px); flex-wrap: wrap; }
+  h2 { margin: 8px 0 0; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.25; font-weight: 500; letter-spacing: -.03em; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2vw, 28px); }
+  .step .frame { position: relative; background: var(--wash); aspect-ratio: 4 / 5; overflow: hidden; }
+  .step .frame img { width: 100%; height: 100%; object-fit: cover; }
+  .step .no { font-family: var(--serif); font-size: 34px; line-height: 1; margin: 18px 0 0; }
+  .step h3 { margin: 10px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+  .step p { margin: 6px 0 0; color: var(--body); font-size: 15px; }
+  .tryon { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 14px 0 12px; pointer-events: none; }
+  .tryon b { font-family: var(--serif); font-weight: 400; color: #fff; font-size: 20px; letter-spacing: .06em; text-shadow: 0 1px 8px rgba(0,0,0,.25); }
+  .tryon i { font-style: normal; font-size: 12px; color: #fff; background: rgba(0,0,0,.45); padding: 3px 8px; }
+  .tag { position: absolute; inset: 0; display: grid; place-items: center; background: #ececec; }
+  .tag .card { width: 64%; background: #fff; padding: 18px 16px 16px; box-shadow: 0 10px 30px rgba(0,0,0,.08); position: relative; }
+  .tag .card::before { content: ""; position: absolute; top: 10px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; border: 1px solid #bbb; }
+  .tag dl { margin: 18px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: 13px; }
+  .tag dt { color: var(--muted); }
+  .tag dd { margin: 0; text-align: right; font-weight: 500; }
+  .tag .read { margin-top: 12px; border-top: 1px dashed #cfcfcf; padding-top: 10px; font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
+  .quad { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #fff; }
+  .quad div { position: relative; overflow: hidden; }
+  .quad img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
+  .quad span { position: absolute; left: 6px; bottom: 6px; font-family: var(--serif); font-size: 15px; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.35); }
+
+  /* 사진은 폰 안에 */
+  .privacy { background: var(--wash); padding: clamp(56px, 8vw, 104px) 0; }
+  .privacy .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+  .privacy ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid #d9d9d9; }
+  .privacy li { padding: 18px 0; border-bottom: 1px solid #d9d9d9; display: grid; grid-template-columns: 28px 1fr; gap: 12px; color: var(--body); }
+  .privacy li b { display: block; color: var(--ink); font-weight: 600; }
+  .privacy .more { display: inline-block; margin-top: 18px; font-size: 14px; text-underline-offset: 4px; min-height: 44px; line-height: 44px; }
+
+  /* 자주 묻는 질문 */
+  section.faq { padding: clamp(64px, 9vw, 120px) 0; }
+  .faq .wrap { max-width: 860px; }
+  details { border-top: 1px solid var(--line); }
+  details:last-of-type { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; padding: 20px 40px 20px 0; position: relative; font-size: 17px; font-weight: 500; letter-spacing: -.02em; min-height: 44px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: ""; position: absolute; right: 6px; top: 50%; width: 12px; height: 12px; margin-top: -9px; border-right: 1.3px solid var(--ink); border-bottom: 1.3px solid var(--ink); rotate: 45deg; transition: rotate .2s; }
+  details[open] summary::after { rotate: 225deg; margin-top: -3px; }
+  details p { margin: 0 0 22px; color: var(--body); max-width: 44em; }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0 calc(36px + env(safe-area-inset-bottom)); font-size: 13px; color: var(--muted); }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 32px; align-items: center; }
+  footer .brand { color: var(--ink); font-size: 16px; }
+  footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+  footer a { text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; }
+
+  @media (max-width: 900px) {
+    .hero .wrap, .privacy .wrap { grid-template-columns: 1fr; }
+    .grid4 { grid-template-columns: repeat(2, 1fr); }
+    .band .wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .grid4 { grid-template-columns: 1fr; }
+    .step .frame { aspect-ratio: 4 / 4.4; }
+    .brand { font-size: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } summary::after { transition: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="FITTING ME SOFTLY 처음으로">FITTING ME SOFTLY</a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-set="ko">KO</button>
+      <button type="button" data-set="en">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="label" data-l="ko">피팅 미 소프틀리 · 쇼핑 보조 앱</p>
+        <p class="label" data-l="en">A shopping companion for Android</p>
+        <h1 class="wordmark">FITTING ME<br>SOFTLY</h1>
+        <p class="kicker" data-l="ko">매장에서 바로 결정하기 어려운 옷,<br>내 사진에 대어 보고 기록하고 비교해 보세요.</p>
+        <p class="kicker" data-l="en">Can't decide in the store?<br>Hold clothes up to your photo, keep it, compare.</p>
+        <p class="lede" data-l="ko">입어 보기는 어렵고, 나에게 어울릴지 궁금하고, 다른 옷과 비교도 하고 싶을 때. 종이 사진을 오려 옷 앞에 대 보던 것처럼, 내 상반신 사진을 카메라 화면 위에 올려 걸린 옷에 대어 봐요.</p>
+        <p class="lede" data-l="en">Trying it on isn't easy, you wonder if it suits you, and you want to compare it with other pieces. Like holding a cut-out photo up to a hanger, put your own upper-body photo over the live camera and line it up with the garment.</p>
+        <div class="status">
+          <span class="badge" aria-label="Google Play">
+            <svg width="18" height="20" viewBox="0 0 18 20" aria-hidden="true"><path d="M1 1l10 9-10 9z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M11 10l3.5-3.2L17 8.6v2.8l-2.5 1.8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+            <span data-l="ko">Google Play 출시 준비 중</span><span data-l="en">Coming soon to Google Play</span>
+          </span>
+          <small data-l="ko">Android · 무료(광고 포함) · 로그인 없음</small>
+          <small data-l="en">Android · Free with ads · No sign-in</small>
+        </div>
+      </div>
+      <div class="pair">
+        <figure>
+          <img src="assets/store-tee.webp" width="600" height="800" alt="" data-alt-ko="매장 행거에 걸린 흰 티셔츠" data-alt-en="A white tee on a store hanger">
+          <figcaption data-l="ko">매장의 옷</figcaption><figcaption data-l="en">In the store</figcaption>
+        </figure>
+        <span class="arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.3"><path d="M4 12h16M14 6l6 6-6 6"/></svg></span>
+        <figure>
+          <img src="assets/shot-white.webp" width="600" height="750" alt="" data-alt-ko="같은 티셔츠에 내 컷을 대 본 착용샷" data-alt-en="A fitting photo with my cut held up to the same tee">
+          <figcaption data-l="ko">내 컷을 대 보면</figcaption><figcaption data-l="en">Held up to me</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-label="Why">
+    <div class="wrap">
+      <p data-l="ko">“예쁜데… 나한테도 어울릴까?”<span>예쁜 건 알겠는데, 나한테 어울리는지는 또 다른 이야기.</span></p>
+      <p data-l="ko">“탈의실 줄은 길고,”<span>입어 보지 않아도 내 사진으로 먼저 대어 봐요.</span></p>
+      <p data-l="ko">“물어볼 사람은 옆에 없고.”<span>여러 벌을 한 장으로 모아 친구에게 물어봐요.</span></p>
+      <p data-l="en">“It's nice… but on me?”<span>Knowing it's pretty and knowing it suits you are two different things.</span></p>
+      <p data-l="en">“The fitting-room line is long,”<span>Hold it up to your own photo first, no changing needed.</span></p>
+      <p data-l="en">“and nobody's here to ask.”<span>Put several pieces in one image and ask a friend.</span></p>
+    </div>
+  </section>
+
+  <section class="steps" aria-labelledby="how">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="label">How it works</p>
+          <h2 id="how" data-l="ko">대어 보고, 찍고,<br>택까지 남기고, 비교해요.</h2>
+          <h2 data-l="en">Hold it up, shoot,<br>keep the tag, compare.</h2>
+        </div>
+      </div>
+      <div class="grid4">
+        <article class="step">
+          <div class="frame"><img src="assets/cut.webp" width="600" height="750" loading="lazy" alt="" data-alt-ko="옷 부분을 비운 상반신 컷" data-alt-en="An upper-body cut with the clothing area cleared"></div>
+          <p class="no">01</p>
+          <h3 data-l="ko">컷 만들기</h3><h3 data-l="en">Make a cut</h3>
+          <p data-l="ko">정면 상반신 사진을 찍거나 고르고 옷이 보일 부분을 비워요. AUTO(반팔·긴팔·전체)가 옷 부분을 찾아 주고, 남은 곳은 손가락으로 다듬어요.</p>
+          <p data-l="en">Take or pick a front-facing upper-body photo and clear where the clothes should show. AUTO (short · long sleeve · full) finds the area; tidy the rest with a finger.</p>
+        </article>
+        <article class="step">
+          <div class="frame">
+            <img src="assets/shot-white.webp" width="600" height="750" loading="lazy" alt="" data-alt-ko="카메라 화면에서 컷을 걸린 티셔츠에 대 보는 모습" data-alt-en="Holding the cut up to a hanging tee on the camera screen">
+            <div class="tryon" aria-hidden="true"><b>TRY ON</b><i data-l="ko">옷에 맞춰 폰을 움직이세요</i><i data-l="en">Move your phone to line it up</i></div>
+          </div>
+          <p class="no">02</p>
+          <h3 data-l="ko">카메라로 대어 보기</h3><h3 data-l="en">Hold it up</h3>
+          <p data-l="ko">컷을 카메라 화면에 겹치고 걸린 옷에 맞춰 폰을 움직여요. 매장 조명과 사진 색이 다르면 AUTO 한 번으로 밝기·색감을 맞춰요.</p>
+          <p data-l="en">Your cut sits on the live camera. Move the phone to line it up with the garment; AUTO matches the store lighting in one tap.</p>
+        </article>
+        <article class="step">
+          <div class="frame">
+            <div class="tag" role="img" aria-label="Price tag">
+              <div class="card">
+                <dl>
+                  <dt data-l="ko">가격</dt><dt data-l="en">Price</dt><dd>₩29,000</dd>
+                  <dt data-l="ko">사이즈</dt><dt data-l="en">Size</dt><dd>M</dd>
+                  <dt data-l="ko">품번</dt><dt data-l="en">Code</dt><dd>TS-0420</dd>
+                </dl>
+                <div class="read"><span data-l="ko">택에서 읽음</span><span data-l="en">Read from tag</span><span>01</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="no">03</p>
+          <h3 data-l="ko">찍고, 택까지</h3><h3 data-l="en">Shoot, then the tag</h3>
+          <p data-l="ko">마음에 들면 찍고, 이어서 상품택을 찍으면 가격·사이즈·품번을 읽어 그 착용샷에 붙여 둬요. 글자 읽기는 폰 안에서 처리해요.</p>
+          <p data-l="en">Shoot the look, then the price tag: price, size and item code are read on the device and attached to that photo.</p>
+        </article>
+        <article class="step">
+          <div class="frame">
+            <div class="quad">
+              <div><img src="assets/shot-white.webp" width="600" height="750" loading="lazy" alt="" data-alt-ko="흰색 착용샷" data-alt-en="White"><span>01</span></div>
+              <div><img src="assets/shot-gray.webp" width="600" height="750" loading="lazy" alt="" data-alt-ko="그레이 착용샷" data-alt-en="Gray"><span>02</span></div>
+              <div><img src="assets/shot-navy.webp" width="600" height="750" loading="lazy" alt="" data-alt-ko="네이비 착용샷" data-alt-en="Navy"><span>03</span></div>
+              <div><img src="assets/shot-beige.webp" width="600" height="750" loading="lazy" alt="" data-alt-ko="베이지 착용샷" data-alt-en="Beige"><span>04</span></div>
+            </div>
+          </div>
+          <p class="no">04</p>
+          <h3 data-l="ko">비교하고 물어보기</h3><h3 data-l="en">Compare and ask</h3>
+          <p data-l="ko">최대 4벌을 가격·사이즈와 함께 한 장으로 모아 저장하거나 공유해요. ♡ 후보 · ✓ 샀음 · ✕ 패스로 표시해 두고 집에서 다시 살펴봐요.</p>
+          <p data-l="en">Up to 4 pieces with price and size in one image to save or share. Mark ♡ maybe · ✓ bought · ✕ pass and look again at home.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="privacy" aria-labelledby="priv">
+    <div class="wrap">
+      <div>
+        <p class="label">Privacy</p>
+        <h2 id="priv" data-l="ko">사진은<br>내 폰 안에만.</h2>
+        <h2 data-l="en">Your photos<br>stay on your phone.</h2>
+      </div>
+      <div>
+        <ul>
+          <li><span class="serif">01</span><span data-l="ko"><b>로그인 없이 바로</b>계정을 만들지 않아요. 앱을 지우면 앱 안의 사진도 함께 지워져요.</span><span data-l="en"><b>No sign-in</b>No account to create. Uninstalling the app deletes its photos too.</span></li>
+          <li><span class="serif">02</span><span data-l="ko"><b>서버로 보내지 않아요</b>옷 자동 인식과 택 글자 읽기도 기기 안에서 처리해요.</span><span data-l="en"><b>Never uploaded</b>Clothing detection and tag reading both run on the device.</span></li>
+          <li><span class="serif">03</span><span data-l="ko"><b>원할 때만 밖으로</b>사진첩 저장과 공유는 직접 누를 때만 해요. 카메라 권한은 대어 볼 때 이유를 알려 드리고 물어요.</span><span data-l="en"><b>Out only when you choose</b>Saving and sharing happen only when you tap them. Camera permission is asked, with the reason, when you start.</span></li>
+        </ul>
+        <a class="more" href="privacy.html"><span data-l="ko">개인정보처리방침 전문 보기</span><span data-l="en">Read the privacy policy</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" aria-labelledby="faq">
+    <div class="wrap">
+      <p class="label">FAQ</p>
+      <h2 id="faq" data-l="ko">자주 묻는 질문</h2>
+      <h2 data-l="en">Questions</h2>
+      <div style="margin-top: 28px">
+        <details>
+          <summary data-l="ko">가상 피팅 앱인가요?</summary><summary data-l="en">Is this virtual try-on?</summary>
+          <p data-l="ko">아니에요. 옷을 내 몸에 맞게 변형하지 않아요. 옷 부분을 비운 내 사진을 실제 옷에 대어 보는 방식이라, 실제로 입었을 때의 착용감과는 다를 수 있어요.</p>
+          <p data-l="en">No. Clothes aren't reshaped to your body. You hold your own photo, with the clothing area cleared, up to the real garment, so the actual fit may differ.</p>
+        </details>
+        <details>
+          <summary data-l="ko">어떤 사진이 잘 되나요?</summary><summary data-l="en">What kind of photo works best?</summary>
+          <p data-l="ko">정면에서 찍은, 팔을 몸에서 조금 뗀 상반신 사진일수록 자동 인식이 정확해요. 앱 안에서 바로 찍을 수도 있어요(혼자면 타이머로).</p>
+          <p data-l="en">A front-facing upper-body photo with arms slightly away from the body gives the most accurate detection. You can also shoot one in the app, with a timer if you're alone.</p>
+        </details>
+        <details>
+          <summary data-l="ko">인터넷이 필요한가요?</summary><summary data-l="en">Does it need the internet?</summary>
+          <p data-l="ko">옷 자동 인식은 처음 쓸 때 인식 모델(약 22MB)을 한 번 내려받아요. 그 뒤로 대어 보기·택 읽기·비교는 폰 안에서 돼요.</p>
+          <p data-l="en">Clothing detection downloads a model (about 22 MB) once, the first time. After that, holding up, tag reading and comparing all run on the phone.</p>
+        </details>
+        <details>
+          <summary data-l="ko">무료인가요?</summary><summary data-l="en">Is it free?</summary>
+          <p data-l="ko">무료이며 광고가 포함되어 있어요. 옷을 대어 보는 카메라 화면에는 광고를 두지 않아요.</p>
+          <p data-l="en">Yes, free with ads. There are no ads on the camera screen.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="brand">FITTING ME SOFTLY</span>
+    <nav>
+      <a href="privacy.html" data-l="ko">개인정보처리방침</a><a href="privacy.html#en" data-l="en">Privacy</a>
+      <a href="mailto:duomokor@gmail.com">duomokor@gmail.com</a>
+    </nav>
+    <span>© 2026 FITTING ME SOFTLY</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    function apply(lang) {
+      root.lang = lang;
+      document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.set === lang)); });
+      document.querySelectorAll('[data-alt-ko]').forEach(function (img) { img.alt = img.getAttribute('data-alt-' + lang) || ''; });
+      document.title = lang === 'ko' ? '피팅 미 소프틀리 — 옷 대보기부터 비교까지' : 'Fitting Me Softly — Try · Compare';
+    }
+    document.querySelectorAll('.lang button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        apply(b.dataset.set);
+        try { localStorage.setItem('fms-lang', b.dataset.set); } catch (e) {}
+      });
+    });
+    apply(root.lang === 'en' ? 'en' : 'ko');
+  })();
+</script>
+</body>
+</html>
