@@ -111,6 +111,22 @@
   .quad img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
   .quad span { position: absolute; left: 6px; bottom: 6px; font-family: var(--serif); font-size: 15px; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.35); }
 
+  /* 비공개 테스트 */
+  .beta { border-top: 1px solid var(--line); padding: clamp(64px, 9vw, 120px) 0; }
+  .beta .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+  .beta .lede { margin: 16px 0 0; color: var(--body); max-width: 30em; }
+  .beta ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .beta li { padding: 22px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 28px 1fr; gap: 12px; }
+  .beta li b { display: block; font-weight: 600; letter-spacing: -.02em; }
+  .beta li p { margin: 4px 0 12px; color: var(--body); font-size: 15px; }
+  .beta .go { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border: 1px solid var(--ink); color: var(--ink); text-decoration: none; font-size: 14px; overflow-wrap: anywhere; }
+  .beta .go:hover { background: var(--ink); color: var(--paper); }
+  .beta .note { margin: 18px 0 0; font-size: 13px; color: var(--muted); }
+  .copy { margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .copy button { appearance: none; border: 0; background: var(--ink); color: var(--paper); font: inherit; font-size: 14px; min-height: 48px; padding: 0 22px; cursor: pointer; }
+  .copy output { font-size: 13px; color: var(--muted); }
+  @media (max-width: 900px) { .beta .wrap { grid-template-columns: 1fr; } }
+
   /* 사진은 폰 안에 */
   .privacy { background: var(--wash); padding: clamp(56px, 8vw, 104px) 0; }
   .privacy .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
@@ -173,10 +189,10 @@
         <p class="lede" data-l="ko">입어 보기는 어렵고, 나에게 어울릴지 궁금하고, 다른 옷과 비교도 하고 싶을 때. 종이 사진을 오려 옷 앞에 대 보던 것처럼, 내 상반신 사진을 카메라 화면 위에 올려 걸린 옷에 대어 봐요.</p>
         <p class="lede" data-l="en">Trying it on isn't easy, you wonder if it suits you, and you want to compare it with other pieces. Like holding a cut-out photo up to a hanger, put your own upper-body photo over the live camera and line it up with the garment.</p>
         <div class="status">
-          <span class="badge" aria-label="Google Play">
+          <a class="badge" href="#beta">
             <svg width="18" height="20" viewBox="0 0 18 20" aria-hidden="true"><path d="M1 1l10 9-10 9z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M11 10l3.5-3.2L17 8.6v2.8l-2.5 1.8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-            <span data-l="ko">Google Play 출시 준비 중</span><span data-l="en">Coming soon to Google Play</span>
-          </span>
+            <span data-l="ko">베타 테스터 모집 중</span><span data-l="en">Join the beta on Google Play</span>
+          </a>
           <small data-l="ko">Android · 무료(광고 포함) · 로그인 없음</small>
           <small data-l="en">Android · Free with ads · No sign-in</small>
         </div>
@@ -269,6 +285,38 @@
     </div>
   </section>
 
+  <section class="beta" id="beta" aria-labelledby="beta-h">
+    <div class="wrap">
+      <div>
+        <p class="label">Beta</p>
+        <h2 id="beta-h" data-l="ko">먼저 써 보고<br>알려 주세요.</h2>
+        <h2 data-l="en">Try it first,<br>tell us how it goes.</h2>
+        <p class="lede" data-l="ko">Google Play 정식 출시 전에 비공개 테스트를 하고 있어요. 두 단계만 거치면 Play 스토어에서 바로 설치할 수 있어요.</p>
+        <p class="lede" data-l="en">We're running a closed test before the public Google Play release. Two steps and you can install it from the Play Store.</p>
+      </div>
+      <div>
+        <ol>
+          <li><span class="serif">01</span><div>
+            <b data-l="ko">그룹 가입 (먼저 해 주세요)</b><b data-l="en">Join the tester group first</b>
+            <p data-l="ko">테스터 그룹에 가입해야 다음 링크가 열려요.</p><p data-l="en">The next link only opens after you join the group.</p>
+            <a class="go" href="https://groups.google.com/g/fittingmesoftly-testers" target="_blank" rel="noopener">groups.google.com/g/fittingmesoftly-testers</a>
+          </div></li>
+          <li><span class="serif">02</span><div>
+            <b data-l="ko">테스터 등록 후 설치</b><b data-l="en">Become a tester, then install</b>
+            <p data-l="ko">‘테스터 되기’를 누른 뒤 Play 스토어에서 설치해요.</p><p data-l="en">Tap “Become a tester”, then install from the Play Store.</p>
+            <a class="go" href="https://play.google.com/apps/testing/com.giseok.fittingmesoftly" target="_blank" rel="noopener">play.google.com/apps/testing/com.giseok.fittingmesoftly</a>
+          </div></li>
+        </ol>
+        <p class="note" data-l="ko">1번과 2번 모두 같은 구글 계정으로 해 주세요. 설치 후 14일 동안 지우지 말고 가끔 열어 주시면 큰 도움이 돼요. 의견은 duomokor@gmail.com 으로 보내 주세요.</p>
+        <p class="note" data-l="en">Use the same Google account for both steps. Please keep the app installed for 14 days and open it now and then. Feedback: duomokor@gmail.com</p>
+        <div class="copy">
+          <button type="button" id="copy-invite"><span data-l="ko">참여 안내 복사</span><span data-l="en">Copy invite</span></button>
+          <output id="copy-done" aria-live="polite"></output>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="privacy" aria-labelledby="priv">
     <div class="wrap">
       <div>
@@ -343,6 +391,17 @@
         apply(b.dataset.set);
         try { localStorage.setItem('fms-lang', b.dataset.set); } catch (e) {}
       });
+    });
+    // 참여 안내 복사
+    var invite = {
+      ko: '[피팅 미 소프틀리 비공개 테스트 참여 방법]\n\n1. 그룹 가입 (먼저 해 주세요)\nhttps://groups.google.com/g/fittingmesoftly-testers\n\n2. 테스터 등록 후 설치\nhttps://play.google.com/apps/testing/com.giseok.fittingmesoftly\n\n※ 1번과 2번 모두 같은 구글 계정으로 해 주세요.\n※ 설치 후 14일 동안 지우지 말고 가끔 열어 주시면 큰 도움이 돼요.',
+      en: '[Fitting Me Softly closed test]\n\n1. Join the tester group first\nhttps://groups.google.com/g/fittingmesoftly-testers\n\n2. Become a tester, then install\nhttps://play.google.com/apps/testing/com.giseok.fittingmesoftly\n\n* Use the same Google account for both steps.\n* Please keep the app installed for 14 days and open it now and then.'
+    };
+    document.getElementById('copy-invite').addEventListener('click', function () {
+      var lang = root.lang === 'en' ? 'en' : 'ko', out = document.getElementById('copy-done');
+      var done = function () { out.textContent = lang === 'ko' ? '복사했어요' : 'Copied'; };
+      if (navigator.clipboard) navigator.clipboard.writeText(invite[lang]).then(done, function () { out.textContent = invite[lang]; });
+      else out.textContent = invite[lang];
     });
     apply(root.lang === 'en' ? 'en' : 'ko');
   })();
